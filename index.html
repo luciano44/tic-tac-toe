@@ -47,19 +47,32 @@
         /* animation: shake 0.1s infinite linear alternate; */
       }
       .container {
-        background-color: hsla(0, 0%, 100%, 0.1);
+        /* background-color: hsla(0, 0%, 100%, 0.1); */
         width: 750px;
         max-width: 100%;
         aspect-ratio: 1/1;
         border-radius: 5px;
-        overflow: hidden;
+        /* overflow: hidden; */
         display: grid;
         grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
         gap: 5px;
         transition: 0.1s;
       }
 
-      .container > div {
+      .a {
+        border-top-left-radius: 5px;
+      }
+      .c {
+        border-top-right-radius: 5px;
+      }
+      .g {
+        border-bottom-left-radius: 5px;
+      }
+      .i {
+        border-bottom-right-radius: 5px;
+      }
+
+      .box {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -69,7 +82,7 @@
       [checked="X"],
       [checked="O"] {
         background-size: contain;
-        padding: 25px;
+        padding: 15%;
       }
       .img {
         height: 100%;
@@ -85,6 +98,17 @@
       }
       [checked="O"] .img {
         background-image: url("https://cdn-icons-png.flaticon.com/512/105/105152.png");
+      }
+
+      .winner {
+        transition: 0.1s;
+        background-color: rgb(0, 240, 0);
+        box-shadow: 0 0 15px rgba(0, 240, 0, 0.5);
+      }
+
+      .draw {
+        background-color: tomato;
+        box-shadow: 0 0 15px hsla(9, 100%, 64%, 0.5);
       }
 
       [disabled] {
@@ -123,15 +147,15 @@
         <audio src="audio/X.wav" id="x-audio"></audio>
         <audio src="audio/end.wav" id="end-audio"></audio>
         <audio src="audio/draw.wav" id="draw-audio"></audio>
-        <div class="a" checked=""><div class="img"></div></div>
-        <div class="b" checked=""><div class="img"></div></div>
-        <div class="c" checked=""><div class="img"></div></div>
-        <div class="d" checked=""><div class="img"></div></div>
-        <div class="e" checked=""><div class="img"></div></div>
-        <div class="f" checked=""><div class="img"></div></div>
-        <div class="g" checked=""><div class="img"></div></div>
-        <div class="h" checked=""><div class="img"></div></div>
-        <div class="i" checked=""><div class="img"></div></div>
+        <div class="a box" checked=""><div class="img"></div></div>
+        <div class="b box" checked=""><div class="img"></div></div>
+        <div class="c box" checked=""><div class="img"></div></div>
+        <div class="d box" checked=""><div class="img"></div></div>
+        <div class="e box" checked=""><div class="img"></div></div>
+        <div class="f box" checked=""><div class="img"></div></div>
+        <div class="g box" checked=""><div class="img"></div></div>
+        <div class="h box" checked=""><div class="img"></div></div>
+        <div class="i box" checked=""><div class="img"></div></div>
       </div>
     </div>
 
@@ -174,11 +198,15 @@
           endGame()
 
           // restart()
-          el1.style.backgroundColor = "green"
-          el2.style.backgroundColor = "green"
-          el3.style.backgroundColor = "green"
+
+          el1.classList.add("winner")
+          el2.classList.add("winner")
+          el3.classList.add("winner")
+
           return
         }
+
+        // --- CHECKING WINNER ---
 
         //ROW
         checkEqualityAndWinner(a, b, c)
@@ -190,14 +218,15 @@
         checkEqualityAndWinner(b, e, h)
         checkEqualityAndWinner(c, f, i)
 
-        // //HORIZONTAL
+        //HORIZONTAL
         checkEqualityAndWinner(a, e, i)
         checkEqualityAndWinner(c, e, g)
 
+        // DRAW
         if (state.totalBoxesChecked === 9 && !state.winner) {
           playAudio(drawAudio)
+          boxes.forEach((box) => box.classList.add("draw"))
           endGame()
-          // restart()
         }
       }
 
@@ -207,7 +236,8 @@
 
       function startGame() {
         boxes.forEach((box) => {
-          box.style.backgroundColor = "hsla(0, 0%, 100%, 0.15)"
+          box.classList.remove("winner")
+          box.classList.remove("draw")
         })
         game.removeAttribute("disabled")
         container.style.opacity = "1"
@@ -217,15 +247,15 @@
         state.totalBoxesChecked = 0
       }
 
-      function restart() {
-        state.turn = "X"
-        state.totalBoxesChecked = 0
+      // function restart() {
+      //   state.turn = "X"
+      //   state.totalBoxesChecked = 0
 
-        container.style.opacity = "0.5"
-        game.removeAttribute("disabled")
-        container.style.opacity = "1"
-        boxes.forEach((box) => box.setAttribute("checked", ""))
-      }
+      //   container.style.opacity = "0.5"
+      //   game.removeAttribute("disabled")
+      //   container.style.opacity = "1"
+      //   boxes.forEach((box) => box.setAttribute("checked", ""))
+      // }
 
       function playAudio(audio) {
         audio.currentTime = 0
@@ -244,8 +274,12 @@
           }
           playAudio(errorAudio)
           game.style.animation = "shake 0.1s infinite linear alternate"
+          box.classList.add("draw")
           currSetTimeout = setTimeout(() => {
             game.style.animation = "none"
+          }, 250)
+          setTimeout(() => {
+            box.classList.remove("draw")
           }, 250)
           return
         }
