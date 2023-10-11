@@ -102,6 +102,7 @@ function startGame() {
   state.turn = "X"
   state.winner = ""
   state.totalBoxesChecked = 0
+  document.querySelector(".turn img").src = `./imgs/X.svg`
 }
 
 function playAudio(audio) {
@@ -112,6 +113,11 @@ function playAudio(audio) {
 
 function switchTurn() {
   state.turn = state.turn === "X" ? "O" : "X"
+  document.querySelector(".turn").classList.remove("fadeup")
+  setTimeout(() => {
+    document.querySelector(".turn").classList.add("fadeup")
+  }, 50)
+  document.querySelector(".turn img").src = `./imgs/${state.turn}.svg`
 }
 
 function checkBox(box) {
@@ -145,6 +151,7 @@ function checkBox(box) {
 
 function BOTplay() {
   setTimeout(() => {
+    if (state.totalBoxesChecked < 1) return
     const allUnchekedBoxes = document.querySelectorAll('[checked=""]')
     const randomNumber = Math.ceil(Math.random() * allUnchekedBoxes.length - 1)
     checkBox(allUnchekedBoxes[randomNumber])

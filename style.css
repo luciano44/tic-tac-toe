@@ -22,7 +22,7 @@ body {
   padding: 10px;
   flex-direction: column;
 }
-header {
+nav {
   height: 50px;
   width: 500px;
   max-width: 100%;
@@ -32,8 +32,30 @@ header {
   justify-content: space-between;
 }
 
-header img {
+nav img {
   max-height: 100%;
+}
+
+nav .turn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 25px;
+  border-radius: 5px;
+  background-color: hsla(0, 0%, 100%, 0.1);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.fadeup {
+  animation: fadeup 0.5s ease;
+}
+
+nav .turn img {
+  width: 20px;
+  opacity: 0.75;
+  margin-right: 10px;
 }
 
 button {
@@ -43,11 +65,11 @@ button {
   cursor: pointer;
   position: relative;
   bottom: 0px;
+  max-width: 46px;
 }
 
 .jump-anim {
   animation: jump 0.25s ease infinite alternate;
-  /* transform: rotate(10deg); */
 }
 
 button:hover {
@@ -61,14 +83,11 @@ button:hover {
   width: 500px;
   max-width: 100%;
   position: relative;
-  /* animation: shake 0.1s infinite linear alternate; */
 }
 .container {
-  /* background-color: hsla(0, 0%, 100%, 0.1); */
   width: 100%;
   aspect-ratio: 1/1;
   border-radius: 5px;
-  /* overflow: hidden; */
   display: grid;
   grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
   gap: 15px;
@@ -174,5 +193,14 @@ img {
   to {
     /* opacity: 1; */
     top: -5px;
+  }
+}
+
+@keyframes fadeup {
+  from {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  to {
+    border: 1px solid transparent;
   }
 }
