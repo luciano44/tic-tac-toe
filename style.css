@@ -124,9 +124,10 @@ img {
 }
 
 .winner {
-  transition: 0.1s;
   background-color: rgb(17, 219, 17);
   box-shadow: 0 0 15px rgba(17, 219, 17, 0.5);
+  border: 5px solid rgba(0, 128, 0, 0.5);
+  transition: 0.05s;
 }
 
 .draw {
