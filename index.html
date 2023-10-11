@@ -4,141 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      :root {
-        --shake: 5px;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        color: hsla(0, 0%, 93%, 0.5);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-          sans-serif;
-      }
-      body {
-        height: 100vh;
-        width: 100vw;
-        background-color: #111;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        flex-direction: column;
-      }
-      header {
-        background-color: hsla(0, 0%, 100%, 0.25);
-        height: 150px;
-        width: 750px;
-        max-width: 100%;
-        margin-bottom: 10px;
-      }
-
-      button {
-        color: #333;
-      }
-      .game {
-        padding: 5px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        max-width: 100%;
-        position: relative;
-        /* animation: shake 0.1s infinite linear alternate; */
-      }
-      .container {
-        /* background-color: hsla(0, 0%, 100%, 0.1); */
-        width: 750px;
-        max-width: 100%;
-        aspect-ratio: 1/1;
-        border-radius: 5px;
-        /* overflow: hidden; */
-        display: grid;
-        grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
-        gap: 5px;
-        transition: 0.1s;
-      }
-
-      .a {
-        border-top-left-radius: 5px;
-      }
-      .c {
-        border-top-right-radius: 5px;
-      }
-      .g {
-        border-bottom-left-radius: 5px;
-      }
-      .i {
-        border-bottom-right-radius: 5px;
-      }
-
-      .box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: hsla(0, 0%, 100%, 0.15);
-        overflow: hidden;
-      }
-      [checked="X"],
-      [checked="O"] {
-        background-size: contain;
-        padding: 15%;
-      }
-      .img {
-        height: 100%;
-        width: 100%;
-        background-size: contain;
-      }
-      [checked="X"] .img,
-      [checked="O"] .img {
-        animation: pop 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      [checked="X"] .img {
-        background-image: url("https://cdn-icons-png.flaticon.com/512/1/1766.png");
-      }
-      [checked="O"] .img {
-        background-image: url("https://cdn-icons-png.flaticon.com/512/105/105152.png");
-      }
-
-      .winner {
-        transition: 0.1s;
-        background-color: rgb(0, 240, 0);
-        box-shadow: 0 0 15px rgba(0, 240, 0, 0.5);
-      }
-
-      .draw {
-        background-color: tomato;
-        box-shadow: 0 0 15px hsla(9, 100%, 64%, 0.5);
-      }
-
-      [disabled] {
-        pointer-events: none;
-      }
-
-      @keyframes shake {
-        from {
-          right: -5px;
-        }
-        to {
-          right: 5px;
-        }
-      }
-
-      @keyframes pop {
-        from {
-          /* opacity: 0.2; */
-          transform: scale(0.5);
-        }
-        to {
-          /* opacity: 1; */
-          transform: scale(1);
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <button onclick="startGame()">Start</button>
+      <button onclick="startGame()" title="Restart Game">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/3594/3594008.png"
+          alt="Restart"
+        />
+      </button>
+      <button onclick="mute()" title="Mute">
+        <img
+          id="mute"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Speaker_Icon.svg/1200px-Speaker_Icon.svg.png"
+          alt="Mute"
+        />
+      </button>
     </header>
     <div class="game">
       <div class="container">
@@ -159,144 +41,6 @@
       </div>
     </div>
 
-    <script>
-      const state = {
-        turn: "X",
-        totalBoxesChecked: 0,
-        winner: "",
-      }
-      const game = document.querySelector(".game")
-      const container = document.querySelector(".container")
-      const boxes = document.querySelectorAll(".container > div")
-
-      const errorAudio = document.querySelector("#error-audio")
-      const OAudio = document.querySelector("#o-audio")
-      const XAudio = document.querySelector("#x-audio")
-      const endAudio = document.querySelector("#end-audio")
-      const drawAudio = document.querySelector("#draw-audio")
-      const audios = document.querySelectorAll("audio")
-
-      let currSetTimeout
-
-      audios.forEach((aud) => (aud.volume = 0.2))
-
-      function checkWinner() {
-        const [a, b, c, d, e, f, g, h, i] = boxes
-        let thereIsAWinner = false
-
-        function checkEqualityAndWinner(el1, el2, el3) {
-          thereIsAWinner =
-            el1.getAttribute("checked") === el2.getAttribute("checked") &&
-            el1.getAttribute("checked") === el3.getAttribute("checked") &&
-            el1.getAttribute("checked") !== ""
-
-          if (!thereIsAWinner) return
-
-          state.winner = state.turn
-          console.log(state.turn + " WON")
-          playAudio(endAudio)
-          endGame()
-
-          // restart()
-
-          el1.classList.add("winner")
-          el2.classList.add("winner")
-          el3.classList.add("winner")
-
-          return
-        }
-
-        // --- CHECKING WINNER ---
-
-        //ROW
-        checkEqualityAndWinner(a, b, c)
-        checkEqualityAndWinner(d, e, f)
-        checkEqualityAndWinner(g, h, i)
-
-        //COLUMN
-        checkEqualityAndWinner(a, d, g)
-        checkEqualityAndWinner(b, e, h)
-        checkEqualityAndWinner(c, f, i)
-
-        //HORIZONTAL
-        checkEqualityAndWinner(a, e, i)
-        checkEqualityAndWinner(c, e, g)
-
-        // DRAW
-        if (state.totalBoxesChecked === 9 && !state.winner) {
-          playAudio(drawAudio)
-          boxes.forEach((box) => box.classList.add("draw"))
-          endGame()
-        }
-      }
-
-      function endGame() {
-        game.setAttribute("disabled", "")
-      }
-
-      function startGame() {
-        boxes.forEach((box) => {
-          box.classList.remove("winner")
-          box.classList.remove("draw")
-        })
-        game.removeAttribute("disabled")
-        container.style.opacity = "1"
-        boxes.forEach((box) => box.setAttribute("checked", ""))
-        state.turn = "X"
-        state.winner = ""
-        state.totalBoxesChecked = 0
-      }
-
-      // function restart() {
-      //   state.turn = "X"
-      //   state.totalBoxesChecked = 0
-
-      //   container.style.opacity = "0.5"
-      //   game.removeAttribute("disabled")
-      //   container.style.opacity = "1"
-      //   boxes.forEach((box) => box.setAttribute("checked", ""))
-      // }
-
-      function playAudio(audio) {
-        audio.currentTime = 0
-        audio.play()
-      }
-
-      function switchTurn() {
-        state.turn = state.turn === "X" ? "O" : "X"
-      }
-
-      function checkBox(box) {
-        // IF BOX IS ALREADY CHECKED
-        if (box.getAttribute("checked")) {
-          if (currSetTimeout) {
-            clearTimeout(currSetTimeout)
-          }
-          playAudio(errorAudio)
-          game.style.animation = "shake 0.1s infinite linear alternate"
-          box.classList.add("draw")
-          currSetTimeout = setTimeout(() => {
-            game.style.animation = "none"
-          }, 250)
-          setTimeout(() => {
-            box.classList.remove("draw")
-          }, 250)
-          return
-        }
-        box.setAttribute("checked", state.turn)
-        state.totalBoxesChecked += 1
-
-        state.turn === "X" ? playAudio(XAudio) : playAudio(OAudio)
-        checkWinner()
-        switchTurn()
-        console.log("chcked!")
-      }
-
-      boxes.forEach((box) =>
-        box.addEventListener("click", () => {
-          checkBox(box)
-        })
-      )
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>

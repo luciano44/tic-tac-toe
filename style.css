@@ -1,0 +1,153 @@
+:root {
+  --headerBC: hsla(0, 0%, 100%, 0.25);
+  --boxBC: hsla(0, 0%, 100%, 0.15);
+  --gameBC: rgba(255, 255, 255, 0.1);
+  --shake: 5px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: hsla(0, 0%, 93%, 0.5);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  flex-direction: column;
+}
+header {
+  /* background-color: var(--headerBC); */
+  height: 50px;
+  width: 500px;
+  max-width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  padding: 0.1rem;
+  justify-content: space-between;
+}
+
+header img {
+  max-height: 100%;
+  filter: invert(1);
+}
+
+button {
+  color: #333;
+  background-color: transparent;
+  border: none;
+}
+
+button:hover {
+  transition: 0.05s;
+  /* transform: scale(0.9); */
+}
+button:active {
+  opacity: 0.5;
+}
+
+.game {
+  padding: 5px;
+  background-color: var(--gameBC);
+  border-radius: 10px;
+  width: 500px;
+  max-width: 100%;
+  position: relative;
+  /* animation: shake 0.1s infinite linear alternate; */
+}
+.container {
+  /* background-color: hsla(0, 0%, 100%, 0.1); */
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  /* overflow: hidden; */
+  display: grid;
+  grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
+  gap: 5px;
+  transition: 0.1s;
+}
+
+.a {
+  border-top-left-radius: 5px;
+}
+.c {
+  border-top-right-radius: 5px;
+}
+.g {
+  border-bottom-left-radius: 5px;
+}
+.i {
+  border-bottom-right-radius: 5px;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--boxBC);
+  overflow: hidden;
+}
+[checked="X"],
+[checked="O"] {
+  background-size: contain;
+  padding: 15%;
+}
+.img {
+  height: 100%;
+  width: 100%;
+  background-size: contain;
+}
+[checked="X"] .img,
+[checked="O"] .img {
+  animation: pop 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+[checked="X"] .img {
+  background-image: url("https://cdn-icons-png.flaticon.com/512/1/1766.png");
+}
+[checked="O"] .img {
+  background-image: url("https://cdn-icons-png.flaticon.com/512/105/105152.png");
+}
+
+.winner {
+  transition: 0.1s;
+  background-color: rgb(0, 240, 0);
+  box-shadow: 0 0 15px rgba(0, 240, 0, 0.5);
+}
+
+.draw {
+  background-color: tomato;
+  box-shadow: 0 0 15px hsla(9, 100%, 64%, 0.5);
+}
+
+.game[disabled] {
+  pointer-events: none;
+}
+.game:not([disabled]) {
+  cursor: pointer;
+}
+
+@keyframes shake {
+  from {
+    right: calc(-1 * var(--shake));
+  }
+  to {
+    right: var(--shake);
+  }
+}
+
+@keyframes pop {
+  from {
+    /* opacity: 0.2; */
+    transform: scale(0.5);
+  }
+  to {
+    /* opacity: 1; */
+    transform: scale(1);
+  }
+}
