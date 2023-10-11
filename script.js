@@ -8,6 +8,7 @@ const container = document.querySelector(".container")
 const boxes = document.querySelectorAll(".container > div")
 
 const muteBtnImg = document.querySelector("#mute")
+const restartBtnImg = document.querySelector("#restart")
 
 const errorAudio = document.querySelector("#error-audio")
 const OAudio = document.querySelector("#o-audio")
@@ -73,11 +74,9 @@ function checkWinner() {
 
 function mute() {
   if (muted) {
-    muteBtnImg.src =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Speaker_Icon.svg/1200px-Speaker_Icon.svg.png"
+    muteBtnImg.src = "./imgs/volume.svg"
   } else {
-    muteBtnImg.src =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Mute_Icon.svg/1200px-Mute_Icon.svg.png"
+    muteBtnImg.src = "./imgs/mute.svg"
   }
 
   muted = !muted
@@ -85,6 +84,8 @@ function mute() {
 
 function endGame() {
   game.setAttribute("disabled", "")
+  restartBtnImg.src = "./imgs/must-restart.svg"
+  restartBtnImg.classList.add("jump-anim")
 }
 
 function startGame() {
@@ -92,6 +93,9 @@ function startGame() {
     box.classList.remove("winner")
     box.classList.remove("draw")
   })
+  restartBtnImg.classList.remove("jump-anim")
+  restartBtnImg.src = "./imgs/restart.svg"
+
   game.removeAttribute("disabled")
   container.style.opacity = "1"
   boxes.forEach((box) => box.setAttribute("checked", ""))
@@ -99,16 +103,6 @@ function startGame() {
   state.winner = ""
   state.totalBoxesChecked = 0
 }
-
-// function restart() {
-//   state.turn = "X"
-//   state.totalBoxesChecked = 0
-
-//   container.style.opacity = "0.5"
-//   game.removeAttribute("disabled")
-//   container.style.opacity = "1"
-//   boxes.forEach((box) => box.setAttribute("checked", ""))
-// }
 
 function playAudio(audio) {
   if (muted) return
@@ -128,12 +122,12 @@ function checkBox(box) {
     }
     playAudio(errorAudio)
     game.style.animation = "shake 0.1s infinite linear alternate"
-    box.classList.add("draw")
+    box.classList.add("error")
     currSetTimeout = setTimeout(() => {
       game.style.animation = "none"
     }, 250)
     setTimeout(() => {
-      box.classList.remove("draw")
+      box.classList.remove("error")
     }, 250)
     return
   }
@@ -143,6 +137,21 @@ function checkBox(box) {
   state.turn === "X" ? playAudio(XAudio) : playAudio(OAudio)
   checkWinner()
   switchTurn()
+
+  if ((state.turn === "O" && !state.winner) || !state.totalBoxesChecked) {
+    BOTplay()
+  }
+}
+
+function BOTplay() {
+  setTimeout(() => {
+    const allUnchekedBoxes = document.querySelectorAll('[checked=""]')
+    const randomNumber = Math.ceil(Math.random() * allUnchekedBoxes.length - 1)
+    checkBox(allUnchekedBoxes[randomNumber])
+    if (!state.winner || !state.totalBoxesChecked)
+      game.removeAttribute("disabled")
+  }, 500)
+  game.setAttribute("disabled", "")
 }
 
 boxes.forEach((box) =>

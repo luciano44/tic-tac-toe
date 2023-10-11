@@ -15,7 +15,7 @@
 body {
   height: 100vh;
   width: 100vw;
-  background-color: #111;
+  background: linear-gradient(rgb(10, 26, 49), #111);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,6 @@ body {
   flex-direction: column;
 }
 header {
-  /* background-color: var(--headerBC); */
   height: 50px;
   width: 500px;
   max-width: 100%;
@@ -35,25 +34,28 @@ header {
 
 header img {
   max-height: 100%;
-  filter: invert(1);
 }
 
 button {
   color: #333;
   background-color: transparent;
   border: none;
+  cursor: pointer;
+  position: relative;
+  bottom: 0px;
+}
+
+.jump-anim {
+  animation: jump 0.25s ease infinite alternate;
+  /* transform: rotate(10deg); */
 }
 
 button:hover {
-  transition: 0.05s;
-  /* transform: scale(0.9); */
-}
-button:active {
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 .game {
-  padding: 5px;
+  padding: 15px;
   background-color: var(--gameBC);
   border-radius: 10px;
   width: 500px;
@@ -69,7 +71,7 @@ button:active {
   /* overflow: hidden; */
   display: grid;
   grid-template: 1fr 1fr 1fr/ 1fr 1fr 1fr;
-  gap: 5px;
+  gap: 15px;
   transition: 0.1s;
 }
 
@@ -103,26 +105,38 @@ button:active {
   width: 100%;
   background-size: contain;
 }
+
+img {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
 [checked="X"] .img,
 [checked="O"] .img {
   animation: pop 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 [checked="X"] .img {
-  background-image: url("https://cdn-icons-png.flaticon.com/512/1/1766.png");
+  background-image: url("./imgs/X.svg");
 }
 [checked="O"] .img {
-  background-image: url("https://cdn-icons-png.flaticon.com/512/105/105152.png");
+  background-image: url("./imgs/O.svg");
 }
 
 .winner {
   transition: 0.1s;
-  background-color: rgb(0, 240, 0);
-  box-shadow: 0 0 15px rgba(0, 240, 0, 0.5);
+  background-color: rgb(17, 219, 17);
+  box-shadow: 0 0 15px rgba(17, 219, 17, 0.5);
 }
 
 .draw {
+  background-color: darkorange;
+  box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+}
+
+.error {
   background-color: tomato;
-  box-shadow: 0 0 15px hsla(9, 100%, 64%, 0.5);
+  box-shadow: 0 0 15px rgba(255, 99, 71, 0.5);
 }
 
 .game[disabled] {
@@ -149,5 +163,15 @@ button:active {
   to {
     /* opacity: 1; */
     transform: scale(1);
+  }
+}
+
+@keyframes jump {
+  from {
+    top: 0px;
+  }
+  to {
+    /* opacity: 1; */
+    top: -5px;
   }
 }
