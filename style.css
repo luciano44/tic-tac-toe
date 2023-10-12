@@ -286,10 +286,15 @@ img {
 @media screen and (max-width: 762px) {
   .aside-score {
     display: none;
-    background-color: red;
   }
 
   .score {
     display: flex;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .score > p {
+    display: none;
   }
 }
