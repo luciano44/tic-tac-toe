@@ -166,7 +166,7 @@ function checkBox(box) {
   checkWinner()
   switchTurn()
 
-  if ((state.turn === "O" && !state.winner) || !state.totalBoxesChecked) {
+  if ((state.turn === "O" && !state.winner) || !state.totalBoxesChecked === 9) {
     BOTplay()
   }
 }
@@ -175,6 +175,7 @@ function BOTplay() {
   setTimeout(() => {
     if (state.totalBoxesChecked < 1) return
     const allUnchekedBoxes = document.querySelectorAll('[checked=""]')
+    if (!allUnchekedBoxes.length) return
     const randomNumber = Math.ceil(Math.random() * allUnchekedBoxes.length - 1)
     checkBox(allUnchekedBoxes[randomNumber])
     if (!state.winner || !state.totalBoxesChecked)
