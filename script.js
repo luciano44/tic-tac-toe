@@ -11,6 +11,8 @@ const boxes = document.querySelectorAll(".container > div")
 
 const leftScore = document.querySelector(".left-score p")
 const rightScore = document.querySelector(".right-score p")
+const XScore = document.querySelector(".x-score")
+const OScore = document.querySelector(".o-score")
 
 const muteBtnImg = document.querySelector("#mute")
 const restartBtnImg = document.querySelector("#restart")
@@ -31,10 +33,12 @@ function addWinnerScore() {
   if (state.winner === "O") {
     state.Oscore += 1
     rightScore.textContent = state.Oscore
+    OScore.textContent = state.Oscore
   }
   if (state.winner === "X") {
     state.Xscore += 1
     leftScore.textContent = state.Xscore
+    XScore.textContent = state.Xscore
   }
 }
 

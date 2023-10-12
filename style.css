@@ -85,6 +85,28 @@ button:hover {
   position: relative;
 }
 
+.score {
+  display: none;
+  margin-top: 10px;
+  width: 500px;
+  max-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 10px;
+}
+
+.score .score-img {
+  height: 30px;
+}
+
+.score div {
+  display: flex;
+  align-items: center;
+  background-color: hsla(0, 0%, 100%, 0.1);
+  border-radius: 10px;
+  padding: 0 20px;
+}
+
 .aside-score {
   display: flex;
   align-items: center;
@@ -106,22 +128,31 @@ button:hover {
   color: tomato;
 }
 
-.aside-score img {
+.score-img {
   margin-top: 10px;
   margin-bottom: 8px;
 }
 
-.aside-score p {
+.score-num {
   font-family: "Squada One", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
   font-size: 2rem;
 }
 
-.aside-score.left-score p {
+.x-score-num {
   color: rgb(17, 219, 17);
 }
-.aside-score.right-score p {
+.o-score-num {
   color: tomato;
+}
+
+.score .x-score-num {
+  color: rgb(17, 219, 17);
+  margin-left: 10px;
+}
+.score .o-score-num {
+  color: tomato;
+  margin-left: 10px;
 }
 
 .right-score {
@@ -249,5 +280,16 @@ img {
   }
   to {
     border: 1px solid transparent;
+  }
+}
+
+@media screen and (max-width: 762px) {
+  .aside-score {
+    display: none;
+    background-color: red;
+  }
+
+  .score {
+    display: flex;
   }
 }
