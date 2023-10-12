@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&family=Squada+One&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -19,6 +26,14 @@
       </button>
     </nav>
     <div class="game">
+      <div class="aside-score left-score">
+        <small>SCORE</small><img src="./imgs/X.svg" alt="X score" />
+        <p>0</p>
+      </div>
+      <div class="aside-score right-score">
+        <small>SCORE</small><img src="./imgs/O.svg" alt="O score" />
+        <p>0</p>
+      </div>
       <div class="container">
         <audio src="audio/error.ogg" id="error-audio"></audio>
         <audio src="audio/O.wav" id="o-audio"></audio>

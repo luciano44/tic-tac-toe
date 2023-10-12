@@ -2,10 +2,15 @@ const state = {
   turn: "X",
   totalBoxesChecked: 0,
   winner: "",
+  Xscore: 0,
+  Oscore: 0,
 }
 const game = document.querySelector(".game")
 const container = document.querySelector(".container")
 const boxes = document.querySelectorAll(".container > div")
+
+const leftScore = document.querySelector(".left-score p")
+const rightScore = document.querySelector(".right-score p")
 
 const muteBtnImg = document.querySelector("#mute")
 const restartBtnImg = document.querySelector("#restart")
@@ -21,6 +26,17 @@ let currSetTimeout
 let muted = false
 
 audios.forEach((aud) => (aud.volume = 0.2))
+
+function addWinnerScore() {
+  if (state.winner === "O") {
+    state.Oscore += 1
+    rightScore.textContent = state.Oscore
+  }
+  if (state.winner === "X") {
+    state.Xscore += 1
+    leftScore.textContent = state.Xscore
+  }
+}
 
 function checkWinner() {
   const [a, b, c, d, e, f, g, h, i] = boxes
@@ -63,6 +79,8 @@ function checkWinner() {
   //HORIZONTAL
   checkEqualityAndWinner(a, e, i)
   checkEqualityAndWinner(c, e, g)
+
+  addWinnerScore()
 
   // DRAW
   if (state.totalBoxesChecked === 9 && !state.winner) {
