@@ -102,9 +102,10 @@ button:hover {
 .score div {
   display: flex;
   align-items: center;
-  background-color: hsla(0, 0%, 100%, 0.1);
+  background-color: var(--gameBC);
   border-radius: 10px;
   padding: 0 20px;
+  border: 1px solid transparent;
 }
 
 .aside-score {
@@ -113,12 +114,13 @@ button:hover {
   padding: 10px;
   flex-direction: column;
   width: 50px;
-  background-color: hsla(0, 0%, 100%, 0.1);
+  background-color: var(--gameBC);
   border-radius: 5px;
   position: absolute;
   top: 20%;
   transform: translateY(-50%);
   cursor: default;
+  border: 1px solid transparent;
 }
 
 .aside-score.left-score small {
@@ -242,6 +244,21 @@ img {
 }
 .game:not([disabled]) {
   cursor: pointer;
+}
+
+.score-anim {
+  animation: score-glow 0.75s linear;
+}
+
+@keyframes score-glow {
+  from {
+    border: 1px solid white;
+    background-color: hsla(0, 0%, 100%, 0.5);
+  }
+  to {
+    border: 2px solid transparent;
+    background-color: var(--gameBC);
+  }
 }
 
 @keyframes shake {

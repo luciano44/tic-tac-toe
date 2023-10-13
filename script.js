@@ -29,17 +29,45 @@ let muted = false
 
 audios.forEach((aud) => (aud.volume = 0.2))
 
+function removeAllScoreGlowAniamationClass(time) {
+  const animatedElements = document.querySelectorAll(".score-anim")
+
+  setTimeout(() => {
+    animatedElements.forEach((el) => el.classList.remove("score-anim"))
+  }, time)
+}
+
 function addWinnerScore() {
   if (state.winner === "O") {
     state.Oscore += 1
     rightScore.textContent = state.Oscore
     OScore.textContent = state.Oscore
+
+    //add glow animation when scoring
+    document
+      .querySelector(".aside-score.right-score")
+      .classList.add("score-anim")
+    document
+      .querySelector(".score div:nth-child(3)")
+      .classList.add("score-anim")
   }
   if (state.winner === "X") {
     state.Xscore += 1
     leftScore.textContent = state.Xscore
     XScore.textContent = state.Xscore
+
+    //add glow animation when scoring
+    document
+      .querySelector(".aside-score.left-score")
+      .classList.add("score-anim")
+    document
+      .querySelector(".score div:nth-child(1)")
+      .classList.add("score-anim")
   }
+
+  //remove animation class to be added again after someone score after "TIME" miliseconds
+  const TIME = 750
+  removeAllScoreGlowAniamationClass(TIME)
 }
 
 function checkWinner() {
