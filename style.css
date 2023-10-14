@@ -12,16 +12,29 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
+
 body {
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(rgb(5 5 37), #111);
+  background: linear-gradient(rgb(12 6 35), #000);
   display: flex;
-  justify-content: center;
   align-items: center;
   padding: 10px;
   flex-direction: column;
 }
+
+header {
+  min-height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header img {
+  height: 50px;
+}
+
 nav {
   height: 50px;
   width: 500px;
@@ -247,6 +260,23 @@ img {
 
 .score-anim {
   animation: score-glow 0.75s linear;
+}
+
+footer {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer p span {
+  color: hsla(0, 0%, 100%, 0.25);
+}
+footer a {
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
 
 @keyframes score-glow {
