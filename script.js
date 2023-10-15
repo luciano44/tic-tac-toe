@@ -5,18 +5,22 @@ const state = {
   Xscore: 0,
   Oscore: 0,
 }
+// MAIN ELEMENTS
 const game = document.querySelector(".game")
 const container = document.querySelector(".container")
 const boxes = document.querySelectorAll(".container > div")
 
+// SCOREBOARD
 const leftScore = document.querySelector(".left-score p")
 const rightScore = document.querySelector(".right-score p")
 const XScore = document.querySelector(".x-score")
 const OScore = document.querySelector(".o-score")
 
+// MENU BUTTONS
 const muteBtnImg = document.querySelector("#mute")
 const restartBtnImg = document.querySelector("#restart")
 
+// AUDIO ELEMENTS
 const errorAudio = document.querySelector("#error-audio")
 const OAudio = document.querySelector("#o-audio")
 const XAudio = document.querySelector("#x-audio")
@@ -24,10 +28,11 @@ const endAudio = document.querySelector("#end-audio")
 const drawAudio = document.querySelector("#draw-audio")
 const audios = document.querySelectorAll("audio")
 
+// CONFIG
 let currSetTimeout
 let muted = false
-
-audios.forEach((aud) => (aud.volume = 0.2))
+let defaultVolume = 0.2
+audios.forEach((aud) => (aud.volume = defaultVolume))
 
 function removeAllScoreGlowAniamationClass(time) {
   const animatedElements = document.querySelectorAll(".score-anim")
