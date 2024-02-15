@@ -21,6 +21,7 @@ body {
   align-items: center;
   padding: 10px;
   flex-direction: column;
+  user-select: none;
 }
 
 header {
