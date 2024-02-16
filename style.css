@@ -24,6 +24,25 @@ body {
   user-select: none;
 }
 
+#loading {
+  display: grid;
+  place-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  background: linear-gradient(rgb(12 6 35), #000);
+}
+
+#loading img {
+  height: 50px;
+  width: 50px;
+  filter: invert(1);
+  animation: spin 0.75s infinite linear;
+}
+
 header {
   min-height: 200px;
   width: 100%;
@@ -302,6 +321,12 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes score-glow {

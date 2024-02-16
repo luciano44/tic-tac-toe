@@ -5,6 +5,14 @@ const state = {
   Xscore: 0,
   Oscore: 0,
 }
+
+// REMOVES LOADING SPINNER WHEN IT'S DONE LOADING
+const loadHandler = () => {
+  document.querySelector("#loading").remove()
+}
+
+window.addEventListener("load", loadHandler)
+
 // MAIN ELEMENTS
 const game = document.querySelector(".game")
 const container = document.querySelector(".container")
