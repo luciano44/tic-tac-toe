@@ -216,11 +216,26 @@ button:hover {
   background-color: var(--boxBC);
   overflow: hidden;
 }
+
+.box:hover {
+  filter: opacity(0.9);
+  box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.1),
+    inset 0 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
 [checked="X"],
 [checked="O"] {
   background-size: contain;
   padding: 15%;
 }
+
+[checked="X"]:hover,
+[checked="O"]:hover {
+  filter: opacity(0.9);
+  box-shadow: inset 0 0 50px rgba(255, 102, 0, 0.1),
+    inset 0 0 1px 1px rgba(255, 102, 0, 0.5);
+}
+
 .img {
   height: 100%;
   width: 100%;
